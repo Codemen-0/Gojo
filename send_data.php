@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $complete_data = array_merge($data, $server_data);
     
     // Email tujuan (GANTI DENGAN EMAIL ANDA)
-    $to = "Bozzdesajet@gmail.com"; // <- GANTI EMAIL INI
+    $to = "bozzdesajet@gmail.com"; // <- GANTI EMAIL INI
     
     // Subject email
     $subject = "🎮 BUNDLE DM REQUEST - " . (isset($complete_data['bundle_name']) ? $complete_data['bundle_name'] : 'Unknown') . " - " . date('d/m/Y H:i:s');
